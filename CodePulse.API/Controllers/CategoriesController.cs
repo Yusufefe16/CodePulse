@@ -19,7 +19,7 @@ namespace CodePulse.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
 
             var category = new Category
@@ -59,6 +59,56 @@ namespace CodePulse.API.Controllers
 
             return Ok(response);
 
+        }
+
+        [HttpGet]//https://localhost:44313/api/Categories/{id}
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetCategoryById([FromRoute] Guid id)
+        {
+            var existingCategory = await categoryRepository.GetById(id);
+
+            if (existingCategory is null)
+            {
+                return NotFound();
+            }
+
+            var response = new CategoryDto
+            {
+                Id = existingCategory.Id,
+                UrlHandle = existingCategory.UrlHandle,
+                Name = existingCategory.Name
+            };
+            return Ok(response);
+        }
+        
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDTO request)
+        {
+            // Convert DTO to Domain Model    
+
+            var category = new Category
+            {
+                Id = id,
+                Name = request.Name,
+                UrlHandle = request.UrlHandle
+            };
+            
+            category = await categoryRepository.UpdateAsync(category);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var response = new Category
+            {
+                Id = category.Id,
+                UrlHandle = category.UrlHandle,
+                Name = category.Name
+            };
+            
+            return Ok(response);
         }
     }
 }
