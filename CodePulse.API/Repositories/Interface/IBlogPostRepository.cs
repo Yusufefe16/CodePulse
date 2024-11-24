@@ -11,4 +11,7 @@ public interface IBlogPostRepository
     Task<BlogPost?> GetByIdAsync(Guid id);
     
     Task<BlogPost?> UpdateAsync(BlogPost blogPost);
+    Task<BlogPost?> DeleteAsync(Guid id);
+    
+    
 }
