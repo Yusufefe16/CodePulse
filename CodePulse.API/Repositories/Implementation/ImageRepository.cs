@@ -24,7 +24,7 @@ public class ImageRepository: IImageRepository
     public async Task<BlogImage> Upload(IFormFile file, BlogImage blogImage)
     {
         // Upload the Image to API/Images
-        var localPath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", $"{blogImage.FileName}.{blogImage.FileExtension}");
+        var localPath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", $"{blogImage.FileName}{blogImage.FileExtension}");
         using var stream = new FileStream(localPath, FileMode.Create);
         await file.CopyToAsync(stream);
         
