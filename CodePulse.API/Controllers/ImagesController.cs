@@ -15,6 +15,32 @@ public class ImagesController : Controller
     {
         this.imageRepository = imageRepository;
     }
+    //GET: {apibaseurl}/api/images
+    [HttpGet]
+    public async Task<IActionResult> GetAllImages()
+    {
+        var Images = await imageRepository.GetAll();
+        
+        // Domain model to DTO
+
+        var response = new List<BlogImageDto>();
+        foreach (var Image in Images)
+        {
+            response.Add(new BlogImageDto
+            {
+                Id = Image.Id,
+                DateCreated = Image.DateCreated,
+                FileName = Image.FileName,
+                Title = Image.Title,
+                FileExtension = Image.FileExtension,
+                Url = Image.Url
+            });
+        }
+        
+        return Ok(response);
+    }
+    
+    
     //POST: {apibaseurl}/api/images
     [HttpPost]
     public async Task<IActionResult> UploadImages(

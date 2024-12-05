@@ -1,6 +1,7 @@
 ﻿using CodePulse.API.Data;
 using CodePulse.API.Models.Domain;
 using CodePulse.API.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodePulse.API.Repositories.Implementation;
 
@@ -40,5 +41,10 @@ public class ImageRepository: IImageRepository
         await dbContext.SaveChangesAsync();
 
         return blogImage;
+    }
+
+    public async Task<IEnumerable<BlogImage>> GetAll()
+    {
+        return await dbContext.BlogImages.ToListAsync();
     }
 }
