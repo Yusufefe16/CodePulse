@@ -42,7 +42,7 @@ namespace CodePulse.API.Controllers
         }
 
         [HttpGet] //https://localhost:44313/api/Categories
-        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await categoryRepository.GetAllAsync();
