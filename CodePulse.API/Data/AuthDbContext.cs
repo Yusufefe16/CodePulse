@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,14 +26,14 @@ public class AuthDbContext: IdentityDbContext
             {
                 Id = readerRoleId,
                 Name = "Reader",
-                NormalizedName = "Reader".ToUpper(),
+                NormalizedName = "Reader".ToUpperInvariant(),
                 ConcurrencyStamp = readerRoleId
             },
             new IdentityRole()
             {
                 Id = writerRoleId,
                 Name = "Writer",
-                NormalizedName = "Writer".ToUpper(),
+                NormalizedName = "Writer".ToUpperInvariant(),
                 ConcurrencyStamp = writerRoleId
             }
         };
@@ -47,8 +48,8 @@ public class AuthDbContext: IdentityDbContext
             Id = adminUserId,
             UserName = "admin@codepulse.com",
             Email = "admin@codepulse.com",
-            NormalizedEmail = "admin@codepulse.com".ToUpper(),
-            NormalizedUserName = "admin@codepulse.com".ToUpper()
+            NormalizedEmail = "admin@codepulse.com".ToUpper(CultureInfo.InvariantCulture),
+            NormalizedUserName = "admin@codepulse.com".ToUpper(CultureInfo.InvariantCulture)
         };
 
         admin.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(admin, "Admin@123");
