@@ -20,7 +20,7 @@ namespace CodePulse.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+        /*[Authorize(Roles = "Writer")]*/
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
 
@@ -42,10 +42,10 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet] //https://localhost:44313/api/Categories
-        public async Task<IActionResult> GetAllCategories()
+        [HttpGet] //https://localhost:44313/api/Categories?query=html
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
         {
-            var categories = await categoryRepository.GetAllAsync();
+            var categories = await categoryRepository.GetAllAsync(query);
             // Map Domain modal to DTO 
             
             var response = new List<CategoryDto>();

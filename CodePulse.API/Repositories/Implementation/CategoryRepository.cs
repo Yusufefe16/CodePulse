@@ -22,9 +22,23 @@ public class CategoryRepository : ICategoryRepository
         return category;
     }
 
-    public async Task<IEnumerable<Category>> GetAllAsync()
+    public async Task<IEnumerable<Category>> GetAllAsync(string? query = null)
     {
-        return await dbContext.Categories.ToListAsync();
+        //Query
+        var categories = dbContext.Categories.AsQueryable();
+
+        //Filter
+
+        if (string.IsNullOrWhiteSpace(query) == false)
+        {
+            categories = categories.Where(c => c.Name.Contains(query));
+        }
+        
+        //Sorting
+        
+        //Pagination
+
+        return await categories.ToListAsync();
     }
     public async Task<Category> GetById(Guid id)
     {
