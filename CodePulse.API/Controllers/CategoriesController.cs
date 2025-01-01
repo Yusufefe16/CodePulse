@@ -141,5 +141,14 @@ namespace CodePulse.API.Controllers
             
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("count")]
+        public async Task<IActionResult> GetCategoriesTotal()
+        {
+            var count = await categoryRepository.GetCount();
+            return Ok(count);
+        }
+            
     }
 }

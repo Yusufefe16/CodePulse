@@ -97,4 +97,9 @@ public class CategoryRepository : ICategoryRepository
 
         return existingCategory;
     }
+
+    public async Task<int> GetCount()
+    {
+        return await dbContext.Categories.CountAsync();
+    }
 }
