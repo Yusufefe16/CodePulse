@@ -42,10 +42,10 @@ namespace CodePulse.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet] //https://localhost:44313/api/Categories?query=html
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query)
+        [HttpGet] //https://localhost:44313/api/Categories?query=html&sortBy=name&sortDirection=desc
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string? sortBy, [FromQuery] string? sortDirection)
         {
-            var categories = await categoryRepository.GetAllAsync(query);
+            var categories = await categoryRepository.GetAllAsync(query, sortBy, sortDirection);
             // Map Domain modal to DTO 
             
             var response = new List<CategoryDto>();

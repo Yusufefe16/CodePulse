@@ -6,7 +6,7 @@ public interface ICategoryRepository
 {
     Task<Category> CreateAsync(Category category);
 
-    Task<IEnumerable<Category>> GetAllAsync(string? query = null);
+    Task<IEnumerable<Category>> GetAllAsync(string? query = null, string? sortBy = null, string? sortDirection = null);
 
     Task<Category?> GetById(Guid id);
     
